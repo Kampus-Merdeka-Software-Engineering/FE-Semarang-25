@@ -433,21 +433,6 @@ section:nth-child(even){
     display: none;
 }
 
-.search-form div {
-    flex:1 1 45rem;
-    background: #fff;
-    border:var(--border);
-    box-shadow: var(--box-shadow);
-    text-align: center;
-    padding: 2rem;
-    border-radius: .5rem;
-    color:var(--black);
-}
-
-.search-form h1 {
-  margin-top: 0;
-}
-
 .appointment-list div {
     flex:1 1 45rem;
     background: #fff;
@@ -469,6 +454,23 @@ section:nth-child(even){
     line-height: 1.5;
   }
   
+.search-form div {
+    flex:1 1 45rem;
+    background: #fff;
+    border:var(--border);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    padding: 2rem;
+    border-radius: .5rem;
+    color:var(--black);
+}
+
+.search-container .box-container h1{
+    color:var(--black);
+    padding: 1rem;
+    font-size: 3rem;
+}
+
 .search-container .box-container {
     display: flex;
     flex-direction: column;
