@@ -404,8 +404,9 @@ section:nth-child(even){
 }
 
 #appointment-list {
-  margin-top: 20px;
-  font-size: 1.7rem
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 1.7rem
 }
 
 #appointment-list div {
@@ -428,6 +429,32 @@ section:nth-child(even){
   line-height: 1.5;
 }
 
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background:#fff;
+    border-radius: .5rem;
+    border:var(--border);
+    box-shadow: var(--box-shadow);
+}
+ .search-container .box-container{
+    display: flex;
+ } 
+  #search-input {
+    width: 95%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .search-container .btn{
+    padding:1rem 4rem;
+    margin-bottom: 1rem;
+  }
+  
 
 .review .box-container{
     display: grid;
