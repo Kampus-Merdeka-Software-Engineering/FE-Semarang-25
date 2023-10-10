@@ -1,121 +1,140 @@
-let menu = document.querySelector('#menu-btn');
-let navbar = document.querySelector('.navbar');
+let menu = document.querySelector("#menu-btn");
+let navbar = document.querySelector(".navbar");
 
-menu.onclick = () =>{
-    menu.classList.toggle('fa-times');
-    navbar.classList.toggle('active');
-}
+menu.onclick = () => {
+  menu.classList.toggle("fa-times");
+  navbar.classList.toggle("active");
+};
 
-window.onscroll = () =>{
-    menu.classList.remove('fa-times');
-    navbar.classList.remove('active');
-}
+window.onscroll = () => {
+  menu.classList.remove("fa-times");
+  navbar.classList.remove("active");
+};
 
-  // Array untuk menyimpan daftar janji temu
-  var appointments = [];
+// Mendapatkan referensi ke elemen formulir
+const form = document.getElementById("appointment-form");
 
-  // Fungsi Read (Baca Janji)
-  function displayAppointments() {
-    // Mengambil elemen dengan id appointment-list
-    var appointmentList = document.getElementById("appointment-list");
+// Menangani pengiriman formulir ketika formulir disubmit
+form.addEventListener("submit", function (event) {
+  event.preventDefault(); // Menghentikan perilaku bawaan submit
 
-    // Menghapus konten sebelumnya
-    appointmentList.innerHTML = "";
+  // Mendapatkan nilai-nilai dari elemen formulir
+//   const registrationNumber = form.querySelector('[name="registrationNumber"]').value;
+  const name = form.querySelector('[name="name"]').value;
+  const number = form.querySelector('[name="number"]').value;
+  const email = form.querySelector('[name="email"]').value;
+  const gender = form.querySelector('[name="gender"]').value;
+  const specialization = form.querySelector('[name="specialization"]').value;
+  const date = form.querySelector('[name="date"]').value;
 
-    // Menampilkan setiap janji temu dalam database (array appointments)
-    for (var i = 0; i < appointments.length; i++) {
-      var appointment = appointments[i];
+  // Membuat objek data yang akan dikirim ke server
+  const dataToSend = {
+    // registrationNumber,
+    name,
+    number,
+    email,
+    gender,
+    specialization,
+    date,
+  };
 
-      // Membuat elemen untuk menampilkan informasi janji temu
-      var appointmentInfo = document.createElement("div");
-      appointmentInfo.innerHTML = "<h3>Janji Temu " + (i + 1) + "</h3>" +
-        "<p>Nama: " + appointment.name + "</p>" +
-        "<p>Nomor Telepon: " + appointment.number + "</p>" +
-        "<p>Email: " + appointment.email + "</p>" +
-        "<p>Spesialisasi: " + appointment.specialization + "</p>" +
-        "<p>Tanggal: " + appointment.date + "</p>";
+  // URL endpoint untuk mengirim permintaan POST
+  const url = "http://localhost:3000/appointment"; // Ganti dengan URL server Anda
 
-      // Menambahkan elemen ke dalam appointmentList
-      appointmentList.appendChild(appointmentInfo);
-    }
-  }
+  // Mengirim permintaan POST menggunakan fetch
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dataToSend),
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json(); // Menguraikan respons JSON jika berhasil
+      } else {
+        throw new Error("Permintaan gagal"); // Mengangkat kesalahan jika permintaan gagal
+      }
+    })
+    .then((data) => {
+    if (data.message) {
+        // Menampilkan pesan dari server dengan nomor registrasi
+        const registrationNumber = data.message.split(" ").pop();
+        const successMessage = document.getElementById("success-message");
+        const registrationNumberSpan = document.getElementById("registration-number");
+  
+        registrationNumberSpan.textContent = registrationNumber;
+        successMessage.classList.remove("hidden");
+        // Di sini Anda bisa menangani respons dari server
+      } else {
+        throw new Error("Pesan tidak ditemukan dalam respons");
+      }
+    })
+    .catch((error) => {
+      console.error("Terjadi kesalahan:", error);
+      // Di sini Anda bisa menangani kesalahan jika permintaan gagal
+    });
+});
 
-  // Fungsi untuk menangani submit form
-  function handleFormSubmit(event) {
-    event.preventDefault();
+// Mendapatkan referensi ke elemen input pencarian
+const searchInput = document.getElementById("search-input");
 
-    // Mendapatkan nilai-nilai input dari form
-    var name = document.querySelector('input[name="name"]').value;
-    var number = document.querySelector('input[name="number"]').value;
-    var email = document.querySelector('input[name="email"]').value;
-    var specialization = document.querySelector('select[name="specialization"]').value;
-    var date = document.querySelector('input[name="date"]').value;
+// Mendapatkan referensi ke elemen form pencarian
+const searchForm = document.getElementById("search-form");
 
-    // Membuat objek janji temu baru
-    var newAppointment = {
-      name: name,
-      number: number,
-      email: email,
-      specialization: specialization,
-      date: date
-    };
+// Mendapatkan referensi ke elemen daftar janji temu
+const appointmentList = document.getElementById("appointment-list");
 
-    // Menambahkan janji temu baru ke dalam array appointments
-    appointments.push(newAppointment);
+// Menangani pencarian ketika form pencarian disubmit
+searchForm.addEventListener("submit", function (event) {
+  event.preventDefault(); // Menghentikan perilaku bawaan submit
 
-    // Menampilkan daftar janji temu yang diperbarui
-    displayAppointments();
+  // Mendapatkan nilai dari elemen input pencarian
+  const registrationNumber = searchInput.value;
 
-    // Mengosongkan nilai-nilai input form
-    document.querySelector('input[name="name"]').value = "";
-    document.querySelector('input[name="number"]').value = "";
-    document.querySelector('input[name="email"]').value = "";
-    document.querySelector('select[name="specialization"]').value = "";
-    document.querySelector('input[name="date"]').value = "";
+  // URL endpoint untuk melakukan pencarian berdasarkan registrationNumber
+  const searchUrl = `http://localhost:3000/appointment/${registrationNumber}`;
 
-    // Menampilkan pesan sukses
-    var message = document.querySelector('.message');
-    message.innerHTML = "Janji temu berhasil dibuat!";
-  }
+  // Mengirim permintaan GET menggunakan fetch
+  fetch(searchUrl)
+    .then((response) => {
+      if (response.ok) {
+        return response.json(); // Menguraikan respons JSON jika berhasil
+      } else {
+        throw new Error("Pencarian gagal"); // Mengangkat kesalahan jika pencarian gagal
+      }
+    })
+    .then((data) => {
+      if (data.appointment) {
+        // Menampilkan data janji temu yang ditemukan
+        const appointmentData = data.appointment;
 
-  // Menambahkan event listener pada form submit
-  var form = document.getElementById("appointment-form");
-  form.addEventListener("submit", handleFormSubmit);
+        // Membuat elemen untuk menampilkan data janji temu
+        const appointmentElement = document.createElement("div");
+        appointmentElement.classList.add("appointment-data");
 
-  // Memanggil fungsi displayAppointments() saat halaman dimuat
-  displayAppointments();
+        // Menambahkan informasi data janji temu ke dalam elemen
+        appointmentElement.innerHTML = `
+          <h1>Data Janji Temu</h1>
+          <p>Nomor Registrasi: ${appointmentData.registrationNumber}</p>
+          <p>Nama: ${appointmentData.name}</p>
+          <p>Nomor Telepon: ${appointmentData.number}</p>
+          <p>Email: ${appointmentData.email}</p>
+          <p>Jenis Kelamin: ${appointmentData.gender}</p>
+          <p>Spesialisasi: ${appointmentData.specialization}</p>
+          <p>Tanggal: ${appointmentData.date}</p>
+        `;
 
-  // Fungsi Update (Perbarui Janji)
-function updateAppointment(index) {
-  // Mengambil janji temu berdasarkan indeks dalam array appointments
-  var appointment = appointments[index];
-
-  // Mengisi nilai input dengan informasi janji temu yang akan diperbarui
-  document.getElementById("name").value = appointment.name;
-  document.getElementById("number").value = appointment.number;
-  document.getElementById("email").value = appointment.email;
-  document.getElementById("specialization").value = appointment.specialization;
-  document.getElementById("date").value = appointment.date;
-
-  // Menghapus janji temu yang akan diperbarui dari array appointments
-  appointments.splice(index, 1);
-
-  // Menampilkan pesan bahwa janji temu sedang diperbarui
-  document.querySelector(".message").innerHTML = "Silakan perbarui janji temu.";
-
-  // Menampilkan kembali daftar janji temu setelah menghapus yang akan diperbarui
-  displayAppointments();
-}
-
-// Fungsi Delete (Hapus Janji)
-function deleteAppointment(index) {
-  // Menghapus janji temu berdasarkan indeks dalam array appointments
-  appointments.splice(index, 1);
-
-  // Menampilkan pesan bahwa janji temu telah dihapus
-  document.querySelector(".message").innerHTML = "Janji temu telah dihapus.";
-
-  // Menampilkan kembali daftar janji temu setelah menghapus
-  displayAppointments();
-}
+        // Menghapus konten sebelumnya dan menambahkan elemen data janji temu ke dalam daftar
+        appointmentList.innerHTML = "";
+        appointmentList.appendChild(appointmentElement);
+      } else {
+        throw new Error("Janji temu tidak ditemukan");
+      }
+    })
+    .catch((error) => {
+      console.error("Terjadi kesalahan:", error);
+      // Di sini Anda bisa menangani kesalahan jika pencarian gagal
+    });
+});
 
