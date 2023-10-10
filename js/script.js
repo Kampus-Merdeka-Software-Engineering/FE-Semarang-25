@@ -39,7 +39,7 @@ form.addEventListener("submit", function (event) {
   };
 
   // URL endpoint untuk mengirim permintaan POST
-  const url = "http://localhost:3000/appointment"; // Ganti dengan URL server Anda
+  const url = "https://be-semarang-25-production.up.railway.app/appointment"; // Ganti dengan URL server Anda
 
   // Mengirim permintaan POST menggunakan fetch
   fetch(url, {
@@ -93,7 +93,7 @@ searchForm.addEventListener("submit", function (event) {
   const registrationNumber = searchInput.value;
 
   // URL endpoint untuk melakukan pencarian berdasarkan registrationNumber
-  const searchUrl = `http://localhost:3000/appointment/${registrationNumber}`;
+  const searchUrl = `https://be-semarang-25-production.up.railway.app/appointment/${registrationNumber}`;
 
   // Mengirim permintaan GET menggunakan fetch
   fetch(searchUrl)
