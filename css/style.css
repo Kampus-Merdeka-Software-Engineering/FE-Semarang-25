@@ -429,7 +429,7 @@ section:nth-child(even){
   line-height: 1.5;
 }
 
-.search-container {
+.search-container .box-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -437,10 +437,7 @@ section:nth-child(even){
     border-radius: .5rem;
     border:var(--border);
     box-shadow: var(--box-shadow);
-}
- .search-container .box-container{
-    display: flex;
- } 
+} 
  .search-container .btn{
     padding:1rem 4rem;
     margin-bottom: 1rem;
