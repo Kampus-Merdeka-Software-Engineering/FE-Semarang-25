@@ -441,6 +441,10 @@ section:nth-child(even){
  .search-container .box-container{
     display: flex;
  } 
+ .search-container .btn{
+    padding:1rem 4rem;
+    margin-bottom: 1rem;
+}
   #search-input {
     width: 95%;
     margin-top: 1rem;
@@ -448,11 +452,6 @@ section:nth-child(even){
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
-  
-  .search-container .btn{
-    padding:1rem 4rem;
-    margin-bottom: 1rem;
   }
   
 
