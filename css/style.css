@@ -403,13 +403,13 @@ section:nth-child(even){
     padding:1rem 4rem;
 }
 
-#appointment-list {
+#success-message {
     margin-top: 20px;
     margin-bottom: 20px;
     font-size: 1.7rem
 }
 
-#appointment-list div {
+#success-message div {
     flex:1 1 45rem;
     background: #fff;
     border:var(--border);
@@ -420,15 +420,55 @@ section:nth-child(even){
     color:var(--black);
 }
 
-#appointment-list h3 {
+#success-message h3 {
   margin-top: 0;
 }
 
-#appointment-list p {
+#success-message span {
   margin: 0;
   line-height: 1.5;
 }
 
+.hidden {
+    display: none;
+}
+
+.search-form div {
+    flex:1 1 45rem;
+    background: #fff;
+    border:var(--border);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    padding: 2rem;
+    border-radius: .5rem;
+    color:var(--black);
+}
+
+.search-form h1 {
+  margin-top: 0;
+}
+
+.appointment-list div {
+    flex:1 1 45rem;
+    background: #fff;
+    border:var(--border);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    padding: 2rem;
+    border-radius: .5rem;
+    color:var(--black);
+    font-size: 15px;
+}
+
+.appointment-list h1 {
+  margin-top: 0;
+}
+
+.appointment-list p {
+    margin: 0;
+    line-height: 1.5;
+  }
+  
 .search-container .box-container {
     display: flex;
     flex-direction: column;

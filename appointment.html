@@ -37,9 +37,14 @@
         <form action="" id="appointment-form" method="post">
             <p class ="message"></p>
             <h3>Buat Janji Temu Dokter</h3>
+            <!-- <input type="text"name="registrationNumber" placeholder="registrationNumber" class="box" required> -->
             <input type="text"name="name" placeholder="Nama" class="box" required>
             <input type="number"name="number" placeholder="Nomor Telepon" class="box" required>
             <input type="email"name="email" placeholder="Email" class="box" required>
+            <select type="text"name="gender" placeholder="Jenis Kelamin" class="box" required>
+                <option value="Pria">Pria</option>
+                <option value="Wanita">Wanita</option>
+            </select>
             <select type="text"name="specialization" placeholder="Spesialisasi" class="box" required>
                 <option value="Akupuntur">Akupuntur</option>
                 <option value="Anak">Anak</option>
@@ -87,15 +92,23 @@
             <input type="submit" name="submit" value="Buat Janji" class="btn">
         </form>
     </div>
-    <div id="appointment-list">
-    <!-- Daftar Janji Temu -->
+    <div id="success-message" class="hidden">
+        Data telah diterima dengan nomor registrasi: <span id="registration-number"></span>
     </div>
-    
-    <div class="search-container">
-        <input type="text" id="search-input" placeholder="Cari...">
-        <input type="submit" name="submit" value="Cari Janji Temu" class="btn">
+    <br><br><br>
+    <!-- <div class="container"> -->
+        <form id="search-form">
+            <div class="search-container">
+                <h1>Pencarian Janji Temu</h1>
+                <input type="text" id="search-input" placeholder="Cari...">
+                <input type="submit" name="submit" value="Cari Janji Temu" class="btn">
+            </div>
+        </form>
+        <div class="appointment-list" id="appointment-list">
+            <!-- Data janji temu akan ditampilkan di sini -->
+        </div>
     </div>
-    
+
 </section>
 
     <section class="footer">
